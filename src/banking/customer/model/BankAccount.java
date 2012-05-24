@@ -88,8 +88,11 @@ public class BankAccount {
 		}
 	}
 
-	public boolean canSubtract(int money) {
-		return money > saldo + limit * -1;
+	public boolean canSubtract(int amount) {
+		if(amount < 0){
+			amount = -amount;
+		}
+		return amount <= saldo - limit;
 	}
 
 	public int getLimit() {
@@ -97,6 +100,9 @@ public class BankAccount {
 	}
 
 	public void setLimit(int limit) {
+		if(limit > 0){
+			limit = -limit;
+		}
 		this.limit = limit;
 	}
 }

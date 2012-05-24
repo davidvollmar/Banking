@@ -30,16 +30,17 @@ public class BankAccountTest {
 	@Test
 	public void testSubtract() {
 		System.out.println("subtract");
-		
+
 		BankAccount instance = new BankAccount(1, "name", "place", "password");
 		instance.setLimit(0);
 		instance.add(300);
 		assertTrue(instance.subtract(300));
-		assertTrue(instance.getSaldo() ==0);
+		assertTrue(instance.getSaldo() == 0);
 		assertFalse(instance.subtract(1));
 		instance.add(300);
 		assertTrue(instance.subtract(-300));
 		assertTrue(instance.getSaldo() == 0);
+
 	}
 
 	/**
@@ -47,7 +48,13 @@ public class BankAccountTest {
 	 */
 	@Test
 	public void testCanSubtract() {
-		System.out.println("canSubtract");		
+		System.out.println("canSubtract");
 		BankAccount instance = new BankAccount(1, "name", "place", "password");
+		instance.setLimit(0);
+		instance.add(300);
+		assertTrue(instance.canSubtract(300));
+		instance.setLimit(-1000);
+		assertTrue(instance.canSubtract(1300));
+		assertFalse(instance.canSubtract(1301));
 	}
 }
