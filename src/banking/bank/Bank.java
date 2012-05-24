@@ -61,6 +61,16 @@ public class Bank {
 		return null;
 	}
 
+	public BankAccount getBankAccount(int accountNumber) {
+		//Not efficient, but it works.
+		for (int i = 0; i < bankAccounts.size(); i++) {
+			if (bankAccounts.get(i).getAccountNumber() == accountNumber) {
+				return bankAccounts.get(i);
+			}
+		}
+		return null;
+	}
+
 	public boolean hasBankAccount(String name) {
 		for (int i = 0; i < bankAccounts.size(); i++) {
 			if (bankAccounts.get(i).getName().equals(name)) {
@@ -80,7 +90,9 @@ public class Bank {
 	}
 
 	/**
-	 * Gets the account number from the bank account name. Returns -1 if the bank account does not exist.
+	 * Gets the account number from the bank account name. Returns -1 if the
+	 * bank account does not exist.
+	 *
 	 * @param bankAccountName
 	 * @return
 	 */

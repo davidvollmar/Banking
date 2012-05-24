@@ -22,11 +22,6 @@ public class Session extends UnicastRemoteObject implements ISession {
 	private transient BankAccount bankAccount = null;
 	private transient Bank bank = null;
 
-	/**
-	 * Starts the session
-	 *
-	 * @throws RemoteException on connection failure;
-	 */
 	public Session() throws RemoteException {
 	}
 
@@ -57,17 +52,12 @@ public class Session extends UnicastRemoteObject implements ISession {
 		}
 	}
 
-	/**
-	 * Logs the user out,
-	 *
-	 * @throws RemoteException on connection failure
-	 */
 	@Override
 	public void logout() throws RemoteException {
-		if (isAuthenticated) {
+		if (isAuthenticated()) {
 			System.out.println("Client logout.");
 		} else {
-			System.out.println("Client was not even logged in on logout!");
+			System.out.println("Bad state! Client was not even logged in on logout!");
 		}
 		bankAccount = null;
 		isAuthenticated = false;
@@ -90,12 +80,12 @@ public class Session extends UnicastRemoteObject implements ISession {
 	/**
 	 *
 	 * @return @throws RemoteException
-	 * @throws NotAuthenticatedException if not authenticated. Run login()
+	 * @throws NotAuthenticatedException if not authenticated. Run login() first.
 	 * first.
 	 */
 	@Override
 	public int getSaldo() throws RemoteException, NotAuthenticatedException {
-		if (!isAuthenticated) {
+		if (!isAuthenticated()) {
 			throw new NotAuthenticatedException();
 		}
 		return bankAccount.getSaldo();
@@ -122,10 +112,20 @@ public class Session extends UnicastRemoteObject implements ISession {
 	}
 
 	@Override
-	public boolean transfer(int accountNumber, int amount) throws RemoteException, NotAuthenticatedException {
-		if (bankAccount.canSubtract(amount)) {
+	public synchronized boolean transfer(int accountNumber, int amount) throws RemoteException, NotAuthenticatedException {
+		if (!isAuthenticated()) {
+			throw new NotAuthenticatedException();
 		}
-		throw new UnsupportedOperationException("Not yet implemented");
+		if (bankAccount.canSubtract(amount)) {
+			//todo find right bank
+			BankAccount to = bank.getBankAccount(accountNumber);
+			if (to == null) {
+				return false;
+			}
+			to.add(amount);
+			return bankAccount.subtract(amount);
+		}
+		return false;
 	}
 
 	@Override
