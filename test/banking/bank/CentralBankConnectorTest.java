@@ -20,7 +20,7 @@ public class CentralBankConnectorTest {
 
 	@Test
 	public void TestNieuweBank() {
-		String s = CentralBankConnector.nieuweBank("' or '1'='1;-- SELECT * FROM BANK;", "' or '1'='1");
+		String s = CentralBankConnector.nieuweBank("","");
 		System.out.println(s);
 	}
 

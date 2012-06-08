@@ -12,12 +12,14 @@ public class Bank {
 
 	private ArrayList<BankAccount> bankAccounts;
 	private String name;
+	private String prefix;
 
 	/**
 	 *
 	 */
-	public Bank(String name) {
+	public Bank(String name, String prefix) {
 		this.name = name;
+		this.prefix = prefix;
 		bankAccounts = new ArrayList<>();
 		//bankAccounts.add(getBankStubAccount());
 	}
@@ -25,6 +27,11 @@ public class Bank {
 	public String getName() {
 		return name;
 	}
+	
+	public String getPrefix(){
+		return prefix;
+	}
+
 
 	/**
 	 *

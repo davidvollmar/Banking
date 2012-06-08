@@ -34,7 +34,7 @@ public class ServerMain {
 	 */
 	public ServerMain() {
 		banks = new ArrayList<>();
-		Bank bank = new Bank("ING");
+		Bank bank = new Bank("ING","ING");
 		banks.add(bank);
 		try {
 			System.out.println("Starting Server.");

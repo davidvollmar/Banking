@@ -12,7 +12,7 @@ import java.util.logging.Logger;
  * @author David Vollmar <david@vollmar.nl>
  * @since May 25, 2012
  */
-public class db {
+public class CentralBankDatabase {
 
 	private Connection conn = null;
 
@@ -20,12 +20,12 @@ public class db {
 		createTables();
 	}
 
-	private db() {
+	private CentralBankDatabase() {
 		try {
 			Class.forName("org.sqlite.JDBC");
 			conn = DriverManager.getConnection("jdbc:sqlite:database.db");
 		} catch (SQLException | ClassNotFoundException ex) {
-			Logger.getLogger(db.class.getName()).log(Level.SEVERE, null, ex);
+			Logger.getLogger(CentralBankDatabase.class.getName()).log(Level.SEVERE, null, ex);
 		}
 	}
 

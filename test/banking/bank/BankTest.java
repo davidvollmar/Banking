@@ -20,7 +20,7 @@ public class BankTest {
 		String password = "password";
 		String wrongUsername = "wrong username";
 		String wrongPassword = "wrong password";
-		Bank instance = new Bank("testbank");
+		Bank instance = new Bank("testbank","TB");
 		instance.addAccount(username, "location", password);
 
 		assertTrue(instance.authenticate(username, password));
@@ -41,7 +41,7 @@ public class BankTest {
 		String name = "name";
 		String place = "place";
 		String password = "password";
-		Bank bank = new Bank("");
+		Bank bank = new Bank("","");
 		bank.addAccount(name, "place", "password");
 		BankAccount account = bank.getBankAccount(name);
 
@@ -59,7 +59,7 @@ public class BankTest {
 		String name = "name";
 		String place = "place";
 		String password = "password";
-		Bank instance = new Bank("");
+		Bank instance = new Bank("","");
 		instance.addAccount(name, place, password);
 		assertTrue(instance.hasBankAccount(name));
 		//bank is a {@code new}, so the bank account with name {@code name} is the only one.
@@ -73,7 +73,7 @@ public class BankTest {
 	public void testHasBankAccount_int() {
 		System.out.println("hasBankAccount");
 		String name = "name";
-		Bank instance = new Bank("");
+		Bank instance = new Bank("","");
 		instance.addAccount(name, "place", "password");
 		int id = instance.getAccountNumber(name);
 		assertTrue(instance.hasBankAccount(id));
@@ -87,7 +87,7 @@ public class BankTest {
 	@Test
 	public void testAddAccount() {
 		System.out.println("addAccount");
-		Bank bank = new Bank("");
+		Bank bank = new Bank("","");
 		assertTrue(bank.addAccount("name", "place", "password"));
 		assertFalse(bank.addAccount("name", "place", ""));
 		assertFalse(bank.addAccount("name", "", "password"));
