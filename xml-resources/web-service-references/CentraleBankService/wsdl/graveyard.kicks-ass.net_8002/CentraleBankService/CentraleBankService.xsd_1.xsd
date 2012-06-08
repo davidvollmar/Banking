@@ -1,0 +1,137 @@
+<?xml version='1.0' encoding='UTF-8'?><!-- Published by JAX-WS RI at http://jax-ws.dev.java.net. RI's version is Metro/2.2-b13 (branches/2.2-6964; 2012-01-09T18:04:18+0000) JAXWS-RI/2.2.6-promoted-b20 JAXWS/2.2 svn-revision#unknown. --><xs:schema xmlns:tns="http://BankServer/" xmlns:xs="http://www.w3.org/2001/XMLSchema" version="1.0" targetNamespace="http://BankServer/">
+
+<xs:element name="CheckRekeningNummer" type="tns:CheckRekeningNummer"/>
+
+<xs:element name="CheckRekeningNummerResponse" type="tns:CheckRekeningNummerResponse"/>
+
+<xs:element name="NieuweBank" type="tns:NieuweBank"/>
+
+<xs:element name="NieuweBankResponse" type="tns:NieuweBankResponse"/>
+
+<xs:element name="bevestigTransactie" type="tns:bevestigTransactie"/>
+
+<xs:element name="bevestigTransactieResponse" type="tns:bevestigTransactieResponse"/>
+
+<xs:element name="getTransacties" type="tns:getTransacties"/>
+
+<xs:element name="getTransactiesLijst" type="tns:getTransactiesLijst"/>
+
+<xs:element name="getTransactiesLijstResponse" type="tns:getTransactiesLijstResponse"/>
+
+<xs:element name="getTransactiesResponse" type="tns:getTransactiesResponse"/>
+
+<xs:element name="hello" type="tns:hello"/>
+
+<xs:element name="helloResponse" type="tns:helloResponse"/>
+
+<xs:element name="nieuwebankrekening" type="tns:nieuwebankrekening"/>
+
+<xs:element name="nieuwebankrekeningResponse" type="tns:nieuwebankrekeningResponse"/>
+
+<xs:element name="toevoegentransactie" type="tns:toevoegentransactie"/>
+
+<xs:element name="toevoegentransactieResponse" type="tns:toevoegentransactieResponse"/>
+
+<xs:complexType name="nieuwebankrekening">
+<xs:sequence>
+<xs:element name="prefix" type="xs:string" minOccurs="0"/>
+</xs:sequence>
+</xs:complexType>
+
+<xs:complexType name="nieuwebankrekeningResponse">
+<xs:sequence>
+<xs:element name="return" type="xs:string" minOccurs="0"/>
+</xs:sequence>
+</xs:complexType>
+
+<xs:complexType name="NieuweBank">
+<xs:sequence>
+<xs:element name="Naam" type="xs:string" minOccurs="0"/>
+<xs:element name="Prefix" type="xs:string" minOccurs="0"/>
+</xs:sequence>
+</xs:complexType>
+
+<xs:complexType name="NieuweBankResponse">
+<xs:sequence>
+<xs:element name="return" type="xs:string" minOccurs="0"/>
+</xs:sequence>
+</xs:complexType>
+
+<xs:complexType name="CheckRekeningNummer">
+<xs:sequence>
+<xs:element name="rekeningnummer" type="xs:int"/>
+</xs:sequence>
+</xs:complexType>
+
+<xs:complexType name="CheckRekeningNummerResponse">
+<xs:sequence>
+<xs:element name="return" type="xs:boolean" minOccurs="0"/>
+</xs:sequence>
+</xs:complexType>
+
+<xs:complexType name="getTransacties">
+<xs:sequence>
+<xs:element name="prefix" type="xs:string" minOccurs="0"/>
+</xs:sequence>
+</xs:complexType>
+
+<xs:complexType name="getTransactiesResponse">
+<xs:sequence>
+<xs:element name="return" type="xs:string" minOccurs="0"/>
+</xs:sequence>
+</xs:complexType>
+
+<xs:complexType name="toevoegentransactie">
+<xs:sequence>
+<xs:element name="vanrekening" type="xs:int"/>
+<xs:element name="naarrekening" type="xs:int"/>
+<xs:element name="bedrag" type="xs:double"/>
+</xs:sequence>
+</xs:complexType>
+
+<xs:complexType name="toevoegentransactieResponse">
+<xs:sequence>
+<xs:element name="return" type="xs:boolean" minOccurs="0"/>
+</xs:sequence>
+</xs:complexType>
+
+<xs:complexType name="getTransactiesLijst">
+<xs:sequence>
+<xs:element name="prefix" type="xs:string" minOccurs="0"/>
+</xs:sequence>
+</xs:complexType>
+
+<xs:complexType name="getTransactiesLijstResponse">
+<xs:sequence>
+<xs:element name="return" type="tns:transactie" nillable="true" minOccurs="0" maxOccurs="unbounded"/>
+</xs:sequence>
+</xs:complexType>
+
+<xs:complexType name="transactie">
+<xs:sequence/>
+</xs:complexType>
+
+<xs:complexType name="bevestigTransactie">
+<xs:sequence>
+<xs:element name="nummer" type="xs:int"/>
+</xs:sequence>
+</xs:complexType>
+
+<xs:complexType name="bevestigTransactieResponse">
+<xs:sequence>
+<xs:element name="return" type="xs:boolean" minOccurs="0"/>
+</xs:sequence>
+</xs:complexType>
+
+<xs:complexType name="hello">
+<xs:sequence>
+<xs:element name="name" type="xs:string" minOccurs="0"/>
+</xs:sequence>
+</xs:complexType>
+
+<xs:complexType name="helloResponse">
+<xs:sequence>
+<xs:element name="return" type="xs:string" minOccurs="0"/>
+</xs:sequence>
+</xs:complexType>
+</xs:schema>

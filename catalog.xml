@@ -1,0 +1,5 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<catalog xmlns="urn:oasis:names:tc:entity:xmlns:xml:catalog" prefer="system">
+    <system systemId="http://graveyard.kicks-ass.net:8002/CentraleBankService/CentraleBankService?wsdl" uri="xml-resources/web-service-references/CentraleBankService/wsdl/graveyard.kicks-ass.net_8002/CentraleBankService/CentraleBankService.wsdl"/>
+    <system systemId="http://graveyard.kicks-ass.net:8002/CentraleBankService/CentraleBankService?xsd=1" uri="xml-resources/web-service-references/CentraleBankService/wsdl/graveyard.kicks-ass.net_8002/CentraleBankService/CentraleBankService.xsd_1.xsd"/>
+</catalog>
