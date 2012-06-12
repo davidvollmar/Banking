@@ -25,5 +25,5 @@ public interface ISession extends Remote{
 	public String getAccountOwner() throws RemoteException, NotAuthenticatedException;
 	public String getAccountPlace() throws RemoteException, NotAuthenticatedException;
 	public int getLimit() throws RemoteException, NotAuthenticatedException;
-
+	public String[][] getLatestTransactions() throws RemoteException, NotAuthenticatedException;
 }

@@ -164,4 +164,9 @@ public class Session extends UnicastRemoteObject implements ISession {
 		}
 		return bankAccount.getLimit();
 	}
+
+	@Override
+	public String[][] getLatestTransactions() throws RemoteException, NotAuthenticatedException {
+		throw new UnsupportedOperationException("Not supported yet.");
+	}
 }

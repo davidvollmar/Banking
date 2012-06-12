@@ -1,5 +1,8 @@
 package banking.customer.model;
 
+import banking.bank.Transaction;
+import java.util.ArrayList;
+
 /**
  * Bank Account class.
  *
@@ -18,6 +21,7 @@ public class BankAccount {
 	 * will be -100.
 	 */
 	private int limit;
+	private ArrayList<Transaction> transactions;
 
 	/**
 	 * Create a new bank account.
@@ -38,6 +42,7 @@ public class BankAccount {
 		this.limit = -100;
 		this.saldo = 0;
 		this.accountNumber = accountNumber;
+		this.transactions = new ArrayList<>();
 	}
 
 	public int getAccountNumber() {
@@ -61,7 +66,9 @@ public class BankAccount {
 	}
 
 	/**
-	 * add an amount to the saldo. If the amount is negative, the amount will not be subtracted.
+	 * add an amount to the saldo. If the amount is negative, the amount will
+	 * not be subtracted.
+	 *
 	 * @param amount
 	 */
 	public void add(int amount) {
@@ -71,13 +78,16 @@ public class BankAccount {
 	}
 
 	/**
-	 * subtract the {@param amount} from the bank account.
+	 * subtract the {
 	 *
-	 * @param amount is absolute, so subtracting 300 or -300 gives the same result
+	 * @param amount} from the bank account.
+	 *
+	 * @param amount is absolute, so subtracting 300 or -300 gives the same
+	 * result
 	 * @return boolean if the subtraction is possible.
 	 */
 	public boolean subtract(int amount) {
-		if(amount < 0){
+		if (amount < 0) {
 			amount = -amount;
 		}
 		if (!canSubtract(amount)) {
@@ -89,7 +99,7 @@ public class BankAccount {
 	}
 
 	public boolean canSubtract(int amount) {
-		if(amount < 0){
+		if (amount < 0) {
 			amount = -amount;
 		}
 		return amount <= saldo - limit;
@@ -100,9 +110,23 @@ public class BankAccount {
 	}
 
 	public void setLimit(int limit) {
-		if(limit > 0){
+		if (limit > 0) {
 			limit = -limit;
 		}
 		this.limit = limit;
+	}
+
+	public ArrayList<Transaction> getTransactions() {
+		return (ArrayList<Transaction>) transactions.clone();
+	}
+
+	//todo: document + test
+	public ArrayList<Transaction> getLatestTransactions(int amount) {
+		if (amount < 1) {
+			return null;
+		} else {
+			int start = (transactions.size() - 1 < (amount)) ? 0 : transactions.size() - (amount + 1);
+			return (ArrayList<Transaction>) transactions.subList(start, transactions.size() - 1);
+		}
 	}
 }
