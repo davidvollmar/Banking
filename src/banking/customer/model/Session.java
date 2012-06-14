@@ -2,9 +2,11 @@ package banking.customer.model;
 
 import exceptions.NotAuthenticatedException;
 import banking.bank.Bank;
+import banking.bank.Transaction;
 import banking.loaders.CustomerMain;
 import java.rmi.RemoteException;
 import java.rmi.server.UnicastRemoteObject;
+import java.util.ArrayList;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
@@ -43,7 +45,7 @@ public class Session extends UnicastRemoteObject implements ISession {
 		if (bank.authenticate(username, notEncryptedPassword)) {
 			System.out.println("Auth: OK!");
 			isAuthenticated = true;
-			this.bankAccount = bank.getBankAccount("test");
+			this.bankAccount = bank.getBankAccount(username);
 			return true;
 		} else {
 			System.out.println("Auth: FAILED");
@@ -70,7 +72,6 @@ public class Session extends UnicastRemoteObject implements ISession {
 	 */
 	@Override
 	public void setBank(Bank bank) throws RemoteException {
-		//TODO replace by central bank
 		if (bank == null) {
 			throw new NullPointerException();
 		}
@@ -87,7 +88,7 @@ public class Session extends UnicastRemoteObject implements ISession {
 	public long getSaldo() throws RemoteException, NotAuthenticatedException {
 		if (!isAuthenticated()) {
 			throw new NotAuthenticatedException();
-		}
+		}		
 		return bankAccount.getSaldo();
 	}
 
@@ -134,7 +135,7 @@ public class Session extends UnicastRemoteObject implements ISession {
 	}
 
 	@Override
-	public int getAccountNumer() throws RemoteException, NotAuthenticatedException {
+	public int getAccountNumber() throws RemoteException, NotAuthenticatedException {
 		if (!isAuthenticated()) {
 			throw new NotAuthenticatedException();
 		}
@@ -167,6 +168,14 @@ public class Session extends UnicastRemoteObject implements ISession {
 
 	@Override
 	public String[][] getLatestTransactions() throws RemoteException, NotAuthenticatedException {
-		throw new UnsupportedOperationException("Not supported yet.");
+		ArrayList<Transaction> t = bankAccount.getLatestTransactions(10);
+		String ret [][] = new String[4][10];
+		if(t == null){
+			return ret;
+		}
+		for(int i = 0 ; i < t.size(); i++){
+			ret[i] = t.get(i).toStringArray();
+		}
+		return ret;
 	}
 }

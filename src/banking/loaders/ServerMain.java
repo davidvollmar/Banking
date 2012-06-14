@@ -7,7 +7,6 @@ import java.net.MalformedURLException;
 import java.rmi.Naming;
 import java.rmi.RemoteException;
 import java.util.ArrayList;
-import java.util.List;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
@@ -32,10 +31,9 @@ public class ServerMain {
 	/**
 	 * Launches a new instance of this server, providing a RMI server.
 	 */
-	public ServerMain() {
-		banks = new ArrayList<>();
+	public ServerMain() {		
 		Bank bank = new Bank("ING","ING");
-		banks.add(bank);
+		
 		try {
 			System.out.println("Starting Server.");
 			java.rmi.registry.LocateRegistry.createRegistry(1099);
@@ -43,8 +41,6 @@ public class ServerMain {
 			session.setBank(bank);
 			Naming.rebind("session", session);
 			System.out.println("Server started succesfully");
-
-
 		} catch (RemoteException | MalformedURLException e) {
 			System.out.println("Server - Client connection ended unexpectedly");
 			Logger.getLogger(ServerMain.class.getName()).log(Level.SEVERE, null, e);

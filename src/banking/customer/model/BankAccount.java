@@ -123,11 +123,11 @@ public class BankAccount {
 
 	//todo: document + test
 	public ArrayList<Transaction> getLatestTransactions(int amountOfTransactions) {
-		if (amountOfTransactions < 1) {
+		if (amountOfTransactions < 1 || transactions.isEmpty()) {
 			return null;
 		} else {
-			int start = (transactions.size() - 1 < (amountOfTransactions)) ? 0 : transactions.size() - (amountOfTransactions + 1);
-			return (ArrayList<Transaction>) transactions.subList(start, transactions.size() - 1);
+			int start = (transactions.size() < amountOfTransactions) ? 0 : transactions.size() - amountOfTransactions;
+			return new ArrayList(transactions.subList(start, transactions.size() - 1));
 		}
 	}
 

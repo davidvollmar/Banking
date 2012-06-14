@@ -9,6 +9,7 @@ import java.rmi.RemoteException;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.swing.JOptionPane;
+import javax.swing.JTable;
 import javax.swing.Timer;
 
 /**
@@ -39,13 +40,16 @@ public class AccountView extends javax.swing.JFrame {
 		});
 		this.session = session;
 		initComponents();
+		initValues();
 	}
 
 	private void initValues() {
 		try {
 			jLabel_saldo.setText(session.getSaldo() + "");
-			jLabel_accountnumber.setText(session.getAccountNumer() + "");
+			jLabel_accountnumber.setText(session.getAccountNumber() + "");
 			jLabel_accountinformation.setText(session.getAccountOwner() + ", " + session.getAccountPlace());
+			String[] transactionTableColumnNames = {"To","From","Date","Amount"};
+			TransactionTable = new JTable(session.getLatestTransactions(), transactionTableColumnNames);
 		} catch (RemoteException | NotAuthenticatedException ex) {
 			showError("Connection Error", "Connection error, please try again.");
 			Logger.getLogger(AccountView.class.getName()).log(Level.SEVERE, null, ex);
@@ -71,7 +75,8 @@ public class AccountView extends javax.swing.JFrame {
         jPanel2 = new javax.swing.JPanel();
         jLabel_saldo = new javax.swing.JLabel();
         jPanel3 = new javax.swing.JPanel();
-        jLabel_message = new javax.swing.JLabel();
+        jScrollPane1 = new javax.swing.JScrollPane();
+        TransactionTable = new javax.swing.JTable();
         jPanel4 = new javax.swing.JPanel();
         jLabel_accountinformation = new javax.swing.JLabel();
         jPanel5 = new javax.swing.JPanel();
@@ -83,6 +88,7 @@ public class AccountView extends javax.swing.JFrame {
         jButton_logout = new javax.swing.JButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
+        setTitle("Account view");
         addMouseMotionListener(new java.awt.event.MouseMotionAdapter() {
             public void mouseDragged(java.awt.event.MouseEvent evt) {
                 formMouseDragged(evt);
@@ -132,22 +138,47 @@ public class AccountView extends javax.swing.JFrame {
 
         jPanel3.setBorder(javax.swing.BorderFactory.createTitledBorder("Messages"));
 
-        jLabel_message.setText("<insert message of the day  e.d.>");
+        TransactionTable.setModel(new javax.swing.table.DefaultTableModel(
+            new Object [][] {
+                {null, null, null, null},
+                {null, null, null, null},
+                {null, null, null, null},
+                {null, null, null, null}
+            },
+            new String [] {
+                "From", "To", "Date", "Amount"
+            }
+        ) {
+            Class[] types = new Class [] {
+                java.lang.String.class, java.lang.String.class, java.lang.String.class, java.lang.String.class
+            };
+            boolean[] canEdit = new boolean [] {
+                false, false, false, false
+            };
+
+            public Class getColumnClass(int columnIndex) {
+                return types [columnIndex];
+            }
+
+            public boolean isCellEditable(int rowIndex, int columnIndex) {
+                return canEdit [columnIndex];
+            }
+        });
+        jScrollPane1.setViewportView(TransactionTable);
 
         javax.swing.GroupLayout jPanel3Layout = new javax.swing.GroupLayout(jPanel3);
         jPanel3.setLayout(jPanel3Layout);
         jPanel3Layout.setHorizontalGroup(
             jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel3Layout.createSequentialGroup()
-                .addContainerGap()
-                .addComponent(jLabel_message)
-                .addContainerGap(259, Short.MAX_VALUE))
+                .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 690, Short.MAX_VALUE)
+                .addContainerGap())
         );
         jPanel3Layout.setVerticalGroup(
             jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel3Layout.createSequentialGroup()
-                .addComponent(jLabel_message)
-                .addGap(0, 144, Short.MAX_VALUE))
+                .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(0, 0, Short.MAX_VALUE))
         );
 
         jPanel4.setBorder(javax.swing.BorderFactory.createTitledBorder("Account information"));
@@ -255,11 +286,15 @@ public class AccountView extends javax.swing.JFrame {
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
                     .addComponent(jPanel2, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                     .addComponent(jPanel5, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                    .addComponent(jPanel3, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(jButton_logout))
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(layout.createSequentialGroup()
+                        .addGap(164, 164, 164)
+                        .addComponent(jButton_logout)
+                        .addGap(0, 0, Short.MAX_VALUE))
+                    .addGroup(layout.createSequentialGroup()
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(jPanel3, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)))
+                .addContainerGap())
         );
 
         pack();
@@ -330,19 +365,20 @@ public class AccountView extends javax.swing.JFrame {
 		timer.restart();
 	}//GEN-LAST:event_formMouseMoved
     // Variables declaration - do not modify//GEN-BEGIN:variables
+    private javax.swing.JTable TransactionTable;
     private javax.swing.JButton jButton_logout;
     private javax.swing.JButton jButton_transfer;
     private javax.swing.JLabel jLabel_accountinformation;
     private javax.swing.JLabel jLabel_accountnumber;
     private javax.swing.JLabel jLabel_accountnumberl;
     private javax.swing.JLabel jLabel_amount;
-    private javax.swing.JLabel jLabel_message;
     private javax.swing.JLabel jLabel_saldo;
     private javax.swing.JPanel jPanel1;
     private javax.swing.JPanel jPanel2;
     private javax.swing.JPanel jPanel3;
     private javax.swing.JPanel jPanel4;
     private javax.swing.JPanel jPanel5;
+    private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JTextField jTextField_accountnumber;
     private javax.swing.JTextField jTextField_amount;
     // End of variables declaration//GEN-END:variables

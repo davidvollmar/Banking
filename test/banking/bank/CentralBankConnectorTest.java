@@ -20,8 +20,8 @@ public class CentralBankConnectorTest {
 
 	@Test
 	public void TestNieuweBank() {
-		String s = CentralBankConnector.nieuweBank("","");
-		System.out.println(s);
+		//String s = CentralBankConnector.nieuweBank("","");
+		//System.out.println(s);
 	}
 
 	@Test

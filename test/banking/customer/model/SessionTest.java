@@ -113,14 +113,14 @@ public class SessionTest {
 	}
 
 	/**
-	 * Test of getAccountNumer method, of class Session.
+	 * Test of getAccountNumber method, of class Session.
 	 */
 	@Test
 	public void testGetAccountNumer() throws Exception {
 		System.out.println("getAccountNumer");
 		Session instance = new Session();
 		int expResult = 0;
-		int result = instance.getAccountNumer();
+		int result = instance.getAccountNumber();
 		assertEquals(expResult, result);
 		// TODO review the generated test code and remove the default call to fail.
 		fail("The test case is a prototype.");
