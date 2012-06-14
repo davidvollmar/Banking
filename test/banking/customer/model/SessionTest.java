@@ -58,8 +58,8 @@ public class SessionTest {
 	public void testGetSaldo() throws Exception {
 		System.out.println("getSaldo");
 		Session instance = new Session();
-		int expResult = 0;
-		int result = instance.getSaldo();
+		long expResult = 0;
+		long result = instance.getSaldo();
 		assertEquals(expResult, result);
 		// TODO review the generated test code and remove the default call to fail.
 		fail("The test case is a prototype.");
@@ -161,8 +161,8 @@ public class SessionTest {
 	public void testGetLimit() throws Exception {
 		System.out.println("getLimit");
 		Session instance = new Session();
-		int expResult = 0;
-		int result = instance.getLimit();
+		long expResult = 0;
+		long result = instance.getLimit();
 		assertEquals(expResult, result);
 		// TODO review the generated test code and remove the default call to fail.
 		fail("The test case is a prototype.");

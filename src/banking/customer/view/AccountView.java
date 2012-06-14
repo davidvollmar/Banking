@@ -279,10 +279,10 @@ public class AccountView extends javax.swing.JFrame {
 	private void jButton_transferActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton_transferActionPerformed
 		String amountStr = jTextField_amount.getText();
 		String accountNumberStr = jTextField_accountnumber.getText();
-		int amount = -1;
+		long amount = -1;
 		int accountNumber = -1;
-		int saldo = -1;
-		int limit = -1;
+		long saldo = -1;
+		long limit = -1;
 		try {
 			amount = Integer.parseInt(amountStr);
 			accountNumber = Integer.parseInt(accountNumberStr);

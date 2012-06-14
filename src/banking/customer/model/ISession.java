@@ -14,16 +14,16 @@ public interface ISession extends Remote{
 	public boolean login(String username, String password) throws RemoteException;
 	public void logout() throws RemoteException;
 
-	public int getSaldo() throws RemoteException, NotAuthenticatedException;
+	public long getSaldo() throws RemoteException, NotAuthenticatedException;
 
 	public void setBank(Bank bank) throws RemoteException;
 
 	public boolean createNewAccount(String name, String place, String password) throws RemoteException;
-	public boolean transfer(int accountNumer, int amount) throws RemoteException, NotAuthenticatedException;
+	public boolean transfer(int accountNumer, long amount) throws RemoteException, NotAuthenticatedException;
 	public boolean isAuthenticated() throws RemoteException, NotAuthenticatedException;
 	public int getAccountNumer() throws RemoteException, NotAuthenticatedException;
 	public String getAccountOwner() throws RemoteException, NotAuthenticatedException;
 	public String getAccountPlace() throws RemoteException, NotAuthenticatedException;
-	public int getLimit() throws RemoteException, NotAuthenticatedException;
+	public long getLimit() throws RemoteException, NotAuthenticatedException;
 	public String[][] getLatestTransactions() throws RemoteException, NotAuthenticatedException;
 }

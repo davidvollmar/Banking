@@ -2,6 +2,7 @@ package banking.customer.model;
 
 import banking.bank.Transaction;
 import java.util.ArrayList;
+import java.util.Date;
 
 /**
  * Bank Account class.
@@ -11,7 +12,7 @@ import java.util.ArrayList;
  */
 public class BankAccount {
 
-	private int saldo;
+	private long saldo;
 	private int accountNumber;
 	private String name;
 	private String place;
@@ -20,7 +21,7 @@ public class BankAccount {
 	 * The negative limit for this bank account. If the limit is €-100, this
 	 * will be -100.
 	 */
-	private int limit;
+	private long limit;
 	private ArrayList<Transaction> transactions;
 
 	/**
@@ -49,7 +50,7 @@ public class BankAccount {
 		return accountNumber;
 	}
 
-	public int getSaldo() {
+	public long getSaldo() {
 		return saldo;
 	}
 
@@ -71,7 +72,7 @@ public class BankAccount {
 	 *
 	 * @param amount
 	 */
-	public void add(int amount) {
+	public void add(long amount) {
 		if (amount > 0) {
 			saldo += amount;
 		}
@@ -86,7 +87,7 @@ public class BankAccount {
 	 * result
 	 * @return boolean if the subtraction is possible.
 	 */
-	public boolean subtract(int amount) {
+	public boolean subtract(long amount) {
 		if (amount < 0) {
 			amount = -amount;
 		}
@@ -98,18 +99,18 @@ public class BankAccount {
 		}
 	}
 
-	public boolean canSubtract(int amount) {
+	public boolean canSubtract(long amount) {
 		if (amount < 0) {
 			amount = -amount;
 		}
 		return amount <= saldo - limit;
 	}
 
-	public int getLimit() {
+	public long getLimit() {
 		return limit;
 	}
 
-	public void setLimit(int limit) {
+	public void setLimit(long limit) {
 		if (limit > 0) {
 			limit = -limit;
 		}
@@ -121,12 +122,19 @@ public class BankAccount {
 	}
 
 	//todo: document + test
-	public ArrayList<Transaction> getLatestTransactions(int amount) {
-		if (amount < 1) {
+	public ArrayList<Transaction> getLatestTransactions(int amountOfTransactions) {
+		if (amountOfTransactions < 1) {
 			return null;
 		} else {
-			int start = (transactions.size() - 1 < (amount)) ? 0 : transactions.size() - (amount + 1);
+			int start = (transactions.size() - 1 < (amountOfTransactions)) ? 0 : transactions.size() - (amountOfTransactions + 1);
 			return (ArrayList<Transaction>) transactions.subList(start, transactions.size() - 1);
 		}
+	}
+
+	public boolean addTransaction(int accountTo, int accountFrom, Date date, long amount){
+		if(date == null){
+			throw new NullPointerException();
+		}
+		return transactions.add(new Transaction(accountTo, accountFrom, date, amount));
 	}
 }

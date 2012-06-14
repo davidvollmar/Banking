@@ -11,11 +11,11 @@ public class Transaction {
 
 	private int accountTo;
 	private int accountFrom;
-	private int amount;
+	private long amount;
 	private Date date;
 	private State state;
 
-	public Transaction(int accountTo, int accountFrom, Date date, int amount) {
+	public Transaction(int accountTo, int accountFrom, Date date, long amount) {
 		this.accountFrom = accountFrom;
 		this.accountTo = accountTo;
 		this.date = date;
@@ -43,7 +43,7 @@ public class Transaction {
 		this.state = state;
 	}
 
-	public int getAmount(){
+	public long getAmount(){
 		return amount;
 	}
 

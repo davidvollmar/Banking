@@ -1,5 +1,6 @@
 package banking.customer.model;
 
+import java.util.Date;
 import static org.junit.Assert.*;
 import org.junit.Test;
 
@@ -56,5 +57,12 @@ public class BankAccountTest {
 		instance.setLimit(-1000);
 		assertTrue(instance.canSubtract(1300));
 		assertFalse(instance.canSubtract(1301));
+	}
+
+	@Test
+	public void testAddTransaction(){
+		System.out.println("addTransaction");
+		BankAccount instance = new BankAccount(1, "name", "place", "password");
+		instance.addTransaction(instance.getAccountNumber(), 2, new Date(), 3);
 	}
 }

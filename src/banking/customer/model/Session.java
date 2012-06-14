@@ -84,7 +84,7 @@ public class Session extends UnicastRemoteObject implements ISession {
 	 * first.
 	 */
 	@Override
-	public int getSaldo() throws RemoteException, NotAuthenticatedException {
+	public long getSaldo() throws RemoteException, NotAuthenticatedException {
 		if (!isAuthenticated()) {
 			throw new NotAuthenticatedException();
 		}
@@ -112,7 +112,7 @@ public class Session extends UnicastRemoteObject implements ISession {
 	}
 
 	@Override
-	public synchronized boolean transfer(int accountNumber, int amount) throws RemoteException, NotAuthenticatedException {
+	public synchronized boolean transfer(int accountNumber, long amount) throws RemoteException, NotAuthenticatedException {
 		if (!isAuthenticated()) {
 			throw new NotAuthenticatedException();
 		}
@@ -158,7 +158,7 @@ public class Session extends UnicastRemoteObject implements ISession {
 	}
 
 	@Override
-	public int getLimit() throws RemoteException, NotAuthenticatedException {
+	public long getLimit() throws RemoteException, NotAuthenticatedException {
 		if (!isAuthenticated()) {
 			throw new NotAuthenticatedException();
 		}
