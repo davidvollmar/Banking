@@ -157,7 +157,7 @@ public class Session extends UnicastRemoteObject implements ISession {
 
 	@Override
 	public String[][] getLatestTransactions() throws RemoteException, NotAuthenticatedException {
-		ArrayList<Transaction> t = bankAccount.getLatestTransactions(10);
+		ArrayList<Transaction> t = bank.getLatestTransactions(10, bankAccount.getAccountNumber());
 		String ret [][] = new String[4][10];
 		if(t == null){
 			return ret;

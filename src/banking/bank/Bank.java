@@ -2,6 +2,7 @@ package banking.bank;
 
 import banking.customer.model.BankAccount;
 import java.util.ArrayList;
+import java.util.Date;
 
 /**
  *
@@ -11,6 +12,7 @@ import java.util.ArrayList;
 public class Bank {
 
 	private ArrayList<BankAccount> bankAccounts;
+	private ArrayList<Transaction> transactions;
 	private String name;
 	private String prefix;
 
@@ -21,17 +23,17 @@ public class Bank {
 		this.name = name;
 		this.prefix = prefix;
 		bankAccounts = new ArrayList<>();
+		transactions = new ArrayList<>();
 		//bankAccounts.add(getBankStubAccount());
 	}
 
 	public String getName() {
 		return name;
 	}
-	
-	public String getPrefix(){
+
+	public String getPrefix() {
 		return prefix;
 	}
-
 
 	/**
 	 *
@@ -133,5 +135,37 @@ public class Bank {
 		}
 		BankAccount b = new BankAccount(bankAccounts.size(), name, place, password);
 		return bankAccounts.add(b);
+	}
+
+	public boolean addTransaction(int accountTo, int accountFrom, Date date, long amount) {
+		if (date == null) {
+			throw new NullPointerException();
+		}
+		return transactions.add(new Transaction(accountTo, accountFrom, date, amount));
+	}
+
+		public ArrayList<Transaction> getTransactions() {
+		return (ArrayList<Transaction>) transactions.clone();
+	}
+
+	//todo: document + test
+	public ArrayList<Transaction> getLatestTransactions(int amountOfTransactions, int bankAccountNumber) {
+		ArrayList<Transaction> filteredList = filterTransactions(bankAccountNumber);
+		if (amountOfTransactions < 1 || filteredList.isEmpty()) {
+			return null;
+		} else {
+			int start = (filteredList.size() < amountOfTransactions) ? 0 : filteredList.size() - amountOfTransactions;
+			return new ArrayList(filteredList.subList(start, filteredList.size() - 1));
+		}
+	}
+
+	private ArrayList<Transaction> filterTransactions(int accountNumber){
+		ArrayList<Transaction> filteredList = new ArrayList<>();
+		for(Transaction t : transactions){
+			if(t.getAccountFrom() == accountNumber || t.getAccountTo() == accountNumber){
+				filteredList.add(t);
+			}
+		}
+		return filteredList;
 	}
 }

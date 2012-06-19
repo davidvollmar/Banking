@@ -1,6 +1,5 @@
 package banking.customer.model;
 
-import banking.bank.Bank;
 import static org.junit.Assert.*;
 import org.junit.Test;
 
@@ -34,19 +33,6 @@ public class SessionTest {
 		System.out.println("logout");
 		Session instance = new Session();
 		instance.logout();
-		// TODO review the generated test code and remove the default call to fail.
-		fail("The test case is a prototype.");
-	}
-
-	/**
-	 * Test of setBank method, of class Session.
-	 */
-	@Test
-	public void testSetBank() throws Exception {
-		System.out.println("setBank");
-		Bank bank = null;
-		Session instance = new Session();
-		instance.setBank(bank);
 		// TODO review the generated test code and remove the default call to fail.
 		fail("The test case is a prototype.");
 	}

@@ -21,8 +21,7 @@ public class BankAccount {
 	 * The negative limit for this bank account. If the limit is €-100, this
 	 * will be -100.
 	 */
-	private long limit;
-	private ArrayList<Transaction> transactions;
+	private long limit;	
 
 	/**
 	 * Create a new bank account.
@@ -42,8 +41,7 @@ public class BankAccount {
 		this.notEncryptedPassword = notEncryptedPassword;
 		this.limit = -100;
 		this.saldo = 0;
-		this.accountNumber = accountNumber;
-		this.transactions = new ArrayList<>();
+		this.accountNumber = accountNumber;		
 	}
 
 	public int getAccountNumber() {
@@ -117,24 +115,7 @@ public class BankAccount {
 		this.limit = limit;
 	}
 
-	public ArrayList<Transaction> getTransactions() {
-		return (ArrayList<Transaction>) transactions.clone();
-	}
 
-	//todo: document + test
-	public ArrayList<Transaction> getLatestTransactions(int amountOfTransactions) {
-		if (amountOfTransactions < 1 || transactions.isEmpty()) {
-			return null;
-		} else {
-			int start = (transactions.size() < amountOfTransactions) ? 0 : transactions.size() - amountOfTransactions;
-			return new ArrayList(transactions.subList(start, transactions.size() - 1));
-		}
-	}
 
-	public boolean addTransaction(int accountTo, int accountFrom, Date date, long amount){
-		if(date == null){
-			throw new NullPointerException();
-		}
-		return transactions.add(new Transaction(accountTo, accountFrom, date, amount));
-	}
+
 }
