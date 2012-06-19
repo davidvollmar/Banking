@@ -127,7 +127,7 @@ public class Bank {
 	 * @param password
 	 * @return
 	 */
-	public boolean addAccount(String name, String place, String password) {
+	public synchronized boolean addAccount(String name, String place, String password) {
 		if (name.isEmpty() || place.isEmpty() || password.isEmpty()) {
 			return false;
 		}

@@ -1,7 +1,6 @@
 package banking.customer.model;
 
 import exceptions.NotAuthenticatedException;
-import banking.bank.Bank;
 import java.rmi.Remote;
 import java.rmi.RemoteException;
 
@@ -15,9 +14,6 @@ public interface ISession extends Remote{
 	public void logout() throws RemoteException;
 
 	public long getSaldo() throws RemoteException, NotAuthenticatedException;
-
-	@Deprecated
-	public void setBank(Bank bank) throws RemoteException;
 
 	public boolean createNewAccount(String name, String place, String password) throws RemoteException;
 	public boolean transfer(int accountNumer, long amount) throws RemoteException, NotAuthenticatedException;

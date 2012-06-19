@@ -1,9 +1,9 @@
 package banking.customer.model;
 
-import exceptions.NotAuthenticatedException;
 import banking.bank.Bank;
 import banking.bank.Transaction;
 import banking.loaders.CustomerMain;
+import exceptions.NotAuthenticatedException;
 import java.rmi.RemoteException;
 import java.rmi.server.UnicastRemoteObject;
 import java.util.ArrayList;
@@ -25,6 +25,7 @@ public class Session extends UnicastRemoteObject implements ISession {
 	private transient Bank bank = null;
 
 	public Session() throws RemoteException {
+		bank = new Bank("ING","ING");
 	}
 
 	/**
@@ -65,18 +66,6 @@ public class Session extends UnicastRemoteObject implements ISession {
 		isAuthenticated = false;
 	}
 
-	/**
-	 *
-	 * @param bank
-	 * @throws RemoteException
-	 */
-	@Override
-	public void setBank(Bank bank) throws RemoteException {
-		if (bank == null) {
-			throw new NullPointerException();
-		}
-		this.bank = bank;
-	}
 
 	/**
 	 *
