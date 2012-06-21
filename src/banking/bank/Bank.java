@@ -122,6 +122,9 @@ public class Bank {
 		return new BankAccount(1, "test", "Eindhoven", "testpassword");
 	}
 
+	public void addStubAccount(){
+		bankAccounts.add(getBankStubAccount());
+	}
 	/**
 	 *
 	 * @param name
@@ -155,7 +158,13 @@ public class Bank {
 		return (ArrayList<Transaction>) transactions.clone();
 	}
 
-	//todo: document + test
+	//todo: test
+	/**
+	 * Returns the latest transactions of the bank account. This includes the bank account with the account number as sender or receiver.
+	 * @param amountOfTransactions
+	 * @param bankAccountNumber
+	 * @return
+	 */
 	public ArrayList<Transaction> getLatestTransactions(int amountOfTransactions, int bankAccountNumber) {
 		ArrayList<Transaction> filteredList = filterTransactions(bankAccountNumber);
 		if (amountOfTransactions < 1 || filteredList.isEmpty()) {

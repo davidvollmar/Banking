@@ -16,57 +16,29 @@ public class SessionTest {
 	@Test
 	public void testLogin() throws Exception {
 		System.out.println("login");
-		String username = "";
-		String notEncryptedPassword = "";
-		Session instance = new Session(new Bank("ING","ING"));
+		Bank b = new Bank("ING", "ING");
+		b.addStubAccount();
+		BankAccount bA = b.getBankStubAccount();
+		String username = bA.getName();
+		String notEncryptedPassword = bA.getPassword();
+		Session instance = new Session(b);
+		boolean expResult = true;
+		boolean result = instance.login(username, notEncryptedPassword);
+		assertEquals(expResult, result);
+	}
+
+	@Test
+	public void testLoginFail() throws Exception {
+		System.out.println("login");
+		Bank b = new Bank("ING", "ING");
+		b.addStubAccount();
+		BankAccount bA = b.getBankStubAccount();
+		String username = bA.getName();
+		String notEncryptedPassword = bA.getPassword() + "FAIL";
+		Session instance = new Session(b);
 		boolean expResult = false;
 		boolean result = instance.login(username, notEncryptedPassword);
 		assertEquals(expResult, result);
-		// TODO review the generated test code and remove the default call to fail.
-		fail("The test case is a prototype.");
-	}
-
-	/**
-	 * Test of logout method, of class Session.
-	 */
-	@Test
-	public void testLogout() throws Exception {
-		System.out.println("logout");
-		Session instance = new Session(new Bank("ING","ING"));
-		instance.logout();
-		// TODO review the generated test code and remove the default call to fail.
-		fail("The test case is a prototype.");
-	}
-
-	/**
-	 * Test of getSaldo method, of class Session.
-	 */
-	@Test
-	public void testGetSaldo() throws Exception {
-		System.out.println("getSaldo");
-		Session instance = new Session(new Bank("ING","ING"));
-		long expResult = 0;
-		long result = instance.getSaldo();
-		assertEquals(expResult, result);
-		// TODO review the generated test code and remove the default call to fail.
-		fail("The test case is a prototype.");
-	}
-
-	/**
-	 * Test of createNewAccount method, of class Session.
-	 */
-	@Test
-	public void testCreateNewAccount() throws Exception {
-		System.out.println("createNewAccount");
-		String name = "";
-		String place = "";
-		String notEncryptedPassword = "";
-		Session instance = new Session(new Bank("ING","ING"));
-		boolean expResult = false;
-		boolean result = instance.createNewAccount(name, place, notEncryptedPassword);
-		assertEquals(expResult, result);
-		// TODO review the generated test code and remove the default call to fail.
-		fail("The test case is a prototype.");
 	}
 
 	/**
@@ -77,81 +49,17 @@ public class SessionTest {
 		System.out.println("transfer");
 		int accountNumber = 0;
 		int amount = 0;
-		Session instance = new Session(new Bank("ING","ING"));
-		boolean expResult = false;
-		boolean result = instance.transfer(accountNumber, amount);
-		assertEquals(expResult, result);
-		// TODO review the generated test code and remove the default call to fail.
-		fail("The test case is a prototype.");
-	}
-
-	/**
-	 * Test of isAuthenticated method, of class Session.
-	 */
-	@Test
-	public void testIsAuthenticated() throws Exception {
-		System.out.println("isAuthenticated");
-		Session instance = new Session(new Bank("ING","ING"));
-		boolean expResult = false;
-		boolean result = instance.isAuthenticated();
-		assertEquals(expResult, result);
-		// TODO review the generated test code and remove the default call to fail.
-		fail("The test case is a prototype.");
-	}
-
-	/**
-	 * Test of getAccountNumber method, of class Session.
-	 */
-	@Test
-	public void testGetAccountNumer() throws Exception {
-		System.out.println("getAccountNumer");
-		Session instance = new Session(new Bank("ING","ING"));
-		int expResult = 0;
-		int result = instance.getAccountNumber();
-		assertEquals(expResult, result);
-		// TODO review the generated test code and remove the default call to fail.
-		fail("The test case is a prototype.");
-	}
-
-	/**
-	 * Test of getAccountOwner method, of class Session.
-	 */
-	@Test
-	public void testGetAccountOwner() throws Exception {
-		System.out.println("getAccountOwner");
-		Session instance = new Session(new Bank("ING","ING"));
-		String expResult = "";
-		String result = instance.getAccountOwner();
-		assertEquals(expResult, result);
-		// TODO review the generated test code and remove the default call to fail.
-		fail("The test case is a prototype.");
-	}
-
-	/**
-	 * Test of getAccountPlace method, of class Session.
-	 */
-	@Test
-	public void testGetAccountPlace() throws Exception {
-		System.out.println("getAccountPlace");
-		Session instance = new Session(new Bank("ING","ING"));
-		String expResult = "";
-		String result = instance.getAccountPlace();
-		assertEquals(expResult, result);
-		// TODO review the generated test code and remove the default call to fail.
-		fail("The test case is a prototype.");
-	}
-
-	/**
-	 * Test of getLimit method, of class Session.
-	 */
-	@Test
-	public void testGetLimit() throws Exception {
-		System.out.println("getLimit");
-		Session instance = new Session(new Bank("ING","ING"));
-		long expResult = 0;
-		long result = instance.getLimit();
-		assertEquals(expResult, result);
-		// TODO review the generated test code and remove the default call to fail.
-		fail("The test case is a prototype.");
+		Bank b = new Bank("ING", "ING");
+		Session instance = new Session(b);
+		BankAccount bA = b.getBankStubAccount();
+		b.addStubAccount();
+		String username = bA.getName();
+		String notEncryptedPassword = bA.getPassword();
+		instance.login(bA.getName(), bA.getPassword());
+		b.addAccount("luser1", "place", "password");
+		int user1id = b.getAccountNumber("luser1");		
+		boolean expResult = true;
+		boolean result = instance.transfer(user1id, 100);
+		assertEquals(expResult, result);		
 	}
 }

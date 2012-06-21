@@ -103,7 +103,14 @@ public class Session extends UnicastRemoteObject implements ISession {
 		return bank.addAccount(name, place, notEncryptedPassword);
 	}
 
-	//todo document + test
+	/**
+	 * Transfers the {@code amount} to the {@code accountNumber}. 
+	 * @param accountNumber
+	 * @param amount
+	 * @return Returns true if processed succesfully, false if otherwise.
+	 * @throws RemoteException
+	 * @throws NotAuthenticatedException 
+	 */
 	@Override
 	public synchronized boolean transfer(int accountNumber, long amount) throws RemoteException, NotAuthenticatedException {
 		if (!isAuthenticated()) {
