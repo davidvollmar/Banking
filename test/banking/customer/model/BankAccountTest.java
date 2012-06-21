@@ -1,9 +1,7 @@
 package banking.customer.model;
 
-import banking.bank.Transaction;
-import java.util.ArrayList;
-import java.util.Date;
-import static org.junit.Assert.*;
+import static org.junit.Assert.assertFalse;
+import static org.junit.Assert.assertTrue;
 import org.junit.Test;
 
 /**
@@ -59,19 +57,5 @@ public class BankAccountTest {
 		instance.setLimit(-1000);
 		assertTrue(instance.canSubtract(1300));
 		assertFalse(instance.canSubtract(1301));
-	}
-
-	@Test
-	public void testAddTransaction(){
-		System.out.println("addTransaction");
-		BankAccount instance = new BankAccount(1, "name", "place", "password");
-		Date date = new Date();
-		Transaction trans = new Transaction (instance.getAccountNumber(), 2, date, 3);
-		instance.addTransaction(instance.getAccountNumber(),2,date,3);
-		ArrayList<Transaction> t = instance.getLatestTransactions(1);
-		System.out.println(t.size());
-		System.out.println(t.toString());
-		assertEquals(t.size(), 1);
-		assertEquals(t.get(0), trans);
 	}
 }

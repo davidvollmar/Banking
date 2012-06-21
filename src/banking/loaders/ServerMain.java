@@ -1,5 +1,6 @@
 package banking.loaders;
 
+import banking.bank.Bank;
 import banking.customer.model.ISession;
 import banking.customer.model.Session;
 import java.net.MalformedURLException;
@@ -33,7 +34,7 @@ public class ServerMain {
 		try {
 			System.out.println("Starting Server.");
 			java.rmi.registry.LocateRegistry.createRegistry(1099);
-			ISession session = new Session();
+			ISession session = new Session(new Bank("ING", "ING"));
 			Naming.rebind("session", session);
 			System.out.println("Server started succesfully");
 		} catch (RemoteException | MalformedURLException e) {

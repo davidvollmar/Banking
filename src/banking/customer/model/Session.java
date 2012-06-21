@@ -24,8 +24,11 @@ public class Session extends UnicastRemoteObject implements ISession {
 	private transient BankAccount bankAccount = null;
 	private transient Bank bank = null;
 
-	public Session() throws RemoteException {
-		bank = new Bank("ING","ING");
+	public Session(Bank bank) throws RemoteException {
+		if (bank == null) {
+			throw new NullPointerException();
+		}
+		this.bank = bank;
 	}
 
 	/**
@@ -66,18 +69,17 @@ public class Session extends UnicastRemoteObject implements ISession {
 		isAuthenticated = false;
 	}
 
-
 	/**
 	 *
 	 * @return @throws RemoteException
-	 * @throws NotAuthenticatedException if not authenticated. Run login() first.
-	 * first.
+	 * @throws NotAuthenticatedException if not authenticated. Run login()
+	 * first. first.
 	 */
 	@Override
 	public long getSaldo() throws RemoteException, NotAuthenticatedException {
 		if (!isAuthenticated()) {
 			throw new NotAuthenticatedException();
-		}		
+		}
 		return bankAccount.getSaldo();
 	}
 
@@ -101,19 +103,23 @@ public class Session extends UnicastRemoteObject implements ISession {
 		return bank.addAccount(name, place, notEncryptedPassword);
 	}
 
+	//todo document + test
 	@Override
 	public synchronized boolean transfer(int accountNumber, long amount) throws RemoteException, NotAuthenticatedException {
 		if (!isAuthenticated()) {
 			throw new NotAuthenticatedException();
 		}
 		if (bankAccount.canSubtract(amount)) {
-			//todo find right bank
-			BankAccount to = bank.getBankAccount(accountNumber);
-			if (to == null) {
-				return false;
+			if (bank.hasBankAccount(accountNumber)) {
+				BankAccount to = bank.getBankAccount(accountNumber);
+				if (to == null) {
+					return false;
+				}
+				to.add(amount);
+				return bankAccount.subtract(amount);
+			}else{
+				return bank.transferToForeignAccount(accountNumber, amount, bankAccount) && bankAccount.subtract(amount);
 			}
-			to.add(amount);
-			return bankAccount.subtract(amount);
 		}
 		return false;
 	}
@@ -158,11 +164,11 @@ public class Session extends UnicastRemoteObject implements ISession {
 	@Override
 	public String[][] getLatestTransactions() throws RemoteException, NotAuthenticatedException {
 		ArrayList<Transaction> t = bank.getLatestTransactions(10, bankAccount.getAccountNumber());
-		String ret [][] = new String[4][10];
-		if(t == null){
-			return ret;
+		String ret[][] = new String[4][10];
+		if (t == null || t.isEmpty()) {
+			return null;
 		}
-		for(int i = 0 ; i < t.size(); i++){
+		for (int i = 0; i < t.size(); i++) {
 			ret[i] = t.get(i).toStringArray();
 		}
 		return ret;

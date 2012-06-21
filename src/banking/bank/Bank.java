@@ -133,7 +133,14 @@ public class Bank {
 		if (name.isEmpty() || place.isEmpty() || password.isEmpty()) {
 			return false;
 		}
-		BankAccount b = new BankAccount(bankAccounts.size(), name, place, password);
+		String accountNumberString = CentralBankConnector.nieuwebankrekening("DB");
+		int accountNumber;
+		try {
+			accountNumber = Integer.parseInt(accountNumberString);
+		} catch (NumberFormatException nfe) {
+			return false;
+		}
+		BankAccount b = new BankAccount(accountNumber, name, place, password);
 		return bankAccounts.add(b);
 	}
 
@@ -144,7 +151,7 @@ public class Bank {
 		return transactions.add(new Transaction(accountTo, accountFrom, date, amount));
 	}
 
-		public ArrayList<Transaction> getTransactions() {
+	public ArrayList<Transaction> getTransactions() {
 		return (ArrayList<Transaction>) transactions.clone();
 	}
 
@@ -159,10 +166,17 @@ public class Bank {
 		}
 	}
 
-	private ArrayList<Transaction> filterTransactions(int accountNumber){
+	public boolean transferToForeignAccount(int accountNumber, long amount, BankAccount bankAccount){
+		if(CentralBankConnector.checkRekeningNummer(accountNumber)){
+			return CentralBankConnector.toevoegentransactie(bankAccount.getAccountNumber(), accountNumber, amount);
+		}
+		return false;
+	}
+
+	private ArrayList<Transaction> filterTransactions(int accountNumber) {
 		ArrayList<Transaction> filteredList = new ArrayList<>();
-		for(Transaction t : transactions){
-			if(t.getAccountFrom() == accountNumber || t.getAccountTo() == accountNumber){
+		for (Transaction t : transactions) {
+			if (t.getAccountFrom() == accountNumber || t.getAccountTo() == accountNumber) {
 				filteredList.add(t);
 			}
 		}

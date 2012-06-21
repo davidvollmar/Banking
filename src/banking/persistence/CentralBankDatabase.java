@@ -8,17 +8,13 @@ import java.util.logging.Level;
 import java.util.logging.Logger;
 
 /**
- *
+ * Not used at the moment, not needed for this POC.
  * @author David Vollmar <david@vollmar.nl>
  * @since May 25, 2012
  */
 public class CentralBankDatabase {
 
 	private Connection conn = null;
-
-	public void createTable1() {
-		createTables();
-	}
 
 	private CentralBankDatabase() {
 		try {

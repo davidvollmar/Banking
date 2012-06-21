@@ -49,7 +49,12 @@ public class AccountView extends javax.swing.JFrame {
 			jLabel_accountnumber.setText(session.getAccountNumber() + "");
 			jLabel_accountinformation.setText(session.getAccountOwner() + ", " + session.getAccountPlace());
 			String[] transactionTableColumnNames = {"To","From","Date","Amount"};
-			TransactionTable = new JTable(session.getLatestTransactions(), transactionTableColumnNames);
+			String[][] latestTransactions = session.getLatestTransactions();
+			if(latestTransactions == null){
+				latestTransactions = new String[4][1];
+				latestTransactions[0][0] = "No transactions available";
+			}
+			TransactionTable = new JTable(latestTransactions, transactionTableColumnNames);
 		} catch (RemoteException | NotAuthenticatedException ex) {
 			showError("Connection Error", "Connection error, please try again.");
 			Logger.getLogger(AccountView.class.getName()).log(Level.SEVERE, null, ex);

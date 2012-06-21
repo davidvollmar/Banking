@@ -1,5 +1,6 @@
 package banking.customer.model;
 
+import banking.bank.Bank;
 import static org.junit.Assert.*;
 import org.junit.Test;
 
@@ -17,7 +18,7 @@ public class SessionTest {
 		System.out.println("login");
 		String username = "";
 		String notEncryptedPassword = "";
-		Session instance = new Session();
+		Session instance = new Session(new Bank("ING","ING"));
 		boolean expResult = false;
 		boolean result = instance.login(username, notEncryptedPassword);
 		assertEquals(expResult, result);
@@ -31,7 +32,7 @@ public class SessionTest {
 	@Test
 	public void testLogout() throws Exception {
 		System.out.println("logout");
-		Session instance = new Session();
+		Session instance = new Session(new Bank("ING","ING"));
 		instance.logout();
 		// TODO review the generated test code and remove the default call to fail.
 		fail("The test case is a prototype.");
@@ -43,7 +44,7 @@ public class SessionTest {
 	@Test
 	public void testGetSaldo() throws Exception {
 		System.out.println("getSaldo");
-		Session instance = new Session();
+		Session instance = new Session(new Bank("ING","ING"));
 		long expResult = 0;
 		long result = instance.getSaldo();
 		assertEquals(expResult, result);
@@ -60,7 +61,7 @@ public class SessionTest {
 		String name = "";
 		String place = "";
 		String notEncryptedPassword = "";
-		Session instance = new Session();
+		Session instance = new Session(new Bank("ING","ING"));
 		boolean expResult = false;
 		boolean result = instance.createNewAccount(name, place, notEncryptedPassword);
 		assertEquals(expResult, result);
@@ -76,7 +77,7 @@ public class SessionTest {
 		System.out.println("transfer");
 		int accountNumber = 0;
 		int amount = 0;
-		Session instance = new Session();
+		Session instance = new Session(new Bank("ING","ING"));
 		boolean expResult = false;
 		boolean result = instance.transfer(accountNumber, amount);
 		assertEquals(expResult, result);
@@ -90,7 +91,7 @@ public class SessionTest {
 	@Test
 	public void testIsAuthenticated() throws Exception {
 		System.out.println("isAuthenticated");
-		Session instance = new Session();
+		Session instance = new Session(new Bank("ING","ING"));
 		boolean expResult = false;
 		boolean result = instance.isAuthenticated();
 		assertEquals(expResult, result);
@@ -104,7 +105,7 @@ public class SessionTest {
 	@Test
 	public void testGetAccountNumer() throws Exception {
 		System.out.println("getAccountNumer");
-		Session instance = new Session();
+		Session instance = new Session(new Bank("ING","ING"));
 		int expResult = 0;
 		int result = instance.getAccountNumber();
 		assertEquals(expResult, result);
@@ -118,7 +119,7 @@ public class SessionTest {
 	@Test
 	public void testGetAccountOwner() throws Exception {
 		System.out.println("getAccountOwner");
-		Session instance = new Session();
+		Session instance = new Session(new Bank("ING","ING"));
 		String expResult = "";
 		String result = instance.getAccountOwner();
 		assertEquals(expResult, result);
@@ -132,7 +133,7 @@ public class SessionTest {
 	@Test
 	public void testGetAccountPlace() throws Exception {
 		System.out.println("getAccountPlace");
-		Session instance = new Session();
+		Session instance = new Session(new Bank("ING","ING"));
 		String expResult = "";
 		String result = instance.getAccountPlace();
 		assertEquals(expResult, result);
@@ -146,7 +147,7 @@ public class SessionTest {
 	@Test
 	public void testGetLimit() throws Exception {
 		System.out.println("getLimit");
-		Session instance = new Session();
+		Session instance = new Session(new Bank("ING","ING"));
 		long expResult = 0;
 		long result = instance.getLimit();
 		assertEquals(expResult, result);
