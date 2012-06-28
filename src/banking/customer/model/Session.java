@@ -121,6 +121,7 @@ public class Session extends UnicastRemoteObject implements ISession {
 				BankAccount to = bank.getBankAccount(accountNumber);
 				if (to == null) {
 					return false;
+
 				}
 				to.add(amount);
 				return bankAccount.subtract(amount);

@@ -16,15 +16,30 @@ public class Bank {
 	private String name;
 	private String prefix;
 
-	/**
-	 *
-	 */
 	public Bank(String name, String prefix) {
 		this.name = name;
 		this.prefix = prefix;
 		bankAccounts = new ArrayList<>();
 		transactions = new ArrayList<>();
-		//bankAccounts.add(getBankStubAccount());
+		fillTransactions();
+	}
+
+	private void fillTransactions() {
+		String data = CentralBankConnector.getTransacties("DB");
+		String[] records = data.split("$");
+
+		for (String transaction : records) {
+			try {
+				String[] fields = transaction.split("#");
+				int id = Integer.parseInt(fields[0]);
+				int from = Integer.parseInt(fields[1]);
+				int to = Integer.parseInt(fields[2]);
+				double bedrag = Double.parseDouble(fields[3]);
+				transactions.add(new Transaction(to, from, new Date(), to));
+			} catch (NumberFormatException e) {
+				System.err.println("Parsing transaction failed on "+transaction);
+			}
+		}
 	}
 
 	public String getName() {
@@ -122,9 +137,10 @@ public class Bank {
 		return new BankAccount(1, "test", "Eindhoven", "testpassword");
 	}
 
-	public void addStubAccount(){
+	public void addStubAccount() {
 		bankAccounts.add(getBankStubAccount());
 	}
+
 	/**
 	 *
 	 * @param name
@@ -158,9 +174,10 @@ public class Bank {
 		return (ArrayList<Transaction>) transactions.clone();
 	}
 
-	//todo: test
 	/**
-	 * Returns the latest transactions of the bank account. This includes the bank account with the account number as sender or receiver.
+	 * Returns the latest transactions of the bank account. This includes the
+	 * bank account with the account number as sender or receiver.
+	 *
 	 * @param amountOfTransactions
 	 * @param bankAccountNumber
 	 * @return
@@ -175,8 +192,8 @@ public class Bank {
 		}
 	}
 
-	public boolean transferToForeignAccount(int accountNumber, long amount, BankAccount bankAccount){
-		if(CentralBankConnector.checkRekeningNummer(accountNumber)){
+	public boolean transferToForeignAccount(int accountNumber, long amount, BankAccount bankAccount) {
+		if (CentralBankConnector.checkRekeningNummer(accountNumber)) {
 			return CentralBankConnector.toevoegentransactie(bankAccount.getAccountNumber(), accountNumber, amount);
 		}
 		return false;
